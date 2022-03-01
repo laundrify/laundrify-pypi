@@ -1,7 +1,13 @@
 from aiohttp import ClientSession, ClientResponse, ClientError
 
 from .utils import validate_auth_code
-from .errors import InvalidFormat, UnknownAuthCode, ApiUnauthorized, ApiConnectionError
+from .exceptions import (
+	ApiConnectionException,
+	InvalidFormat,
+	InvalidTokenException,
+	UnknownAuthCode,
+	UnauthorizedException
+)
 
 class LaundrifyAPI:
 	"""Class to communicate with the laundrify API."""
@@ -28,7 +34,7 @@ class LaundrifyAPI:
 					data = await res.json()
 					return data["token"]
 			except ClientError as err:
-				raise ApiConnectionError( str(err) )
+				raise ApiConnectionException( str(err) )
 
 	async def request(self, method: str, path: str, **kwargs) -> ClientResponse:
 		"""Make a request."""
@@ -45,7 +51,7 @@ class LaundrifyAPI:
 			res = await self.client_session.request(method, f"{path}", **kwargs, headers=headers)
 			res.raise_for_status()
 		except ClientError as err:
-			raise ApiConnectionError(err)
+			raise ApiConnectionException(err)
 
 		return res
 

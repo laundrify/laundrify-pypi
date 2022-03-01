@@ -9,8 +9,11 @@ class InvalidFormat(LaundrifyApiException):
 class UnknownAuthCode(LaundrifyApiException):
 	"""AuthCode could not be found."""
 
-class ApiConnectionError(LaundrifyApiException):
+class ApiConnectionException(LaundrifyApiException):
 	"""Could not connect the the API"""
 
-class ApiUnauthorized(LaundrifyApiException):
+class UnauthorizedException(LaundrifyApiException):
 	"""Request is not authorized."""
+
+class InvalidTokenException(LaundrifyApiException):
+	"""Access Token is invalid."""
