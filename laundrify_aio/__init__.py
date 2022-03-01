@@ -1,4 +1,5 @@
 from aiohttp import ClientSession, ClientResponse, ClientError
+import jwt
 
 from .utils import validate_auth_code
 from .exceptions import (
@@ -57,6 +58,19 @@ class LaundrifyAPI:
 			raise ApiConnectionException(err)
 
 		return res
+
+	async def validate_token(self):
+		"""Make sure the given access token is valid"""
+		token_payload = jwt.decode(self.access_token, options={"verify_signature": False})
+		account_id = await self.get_account_id()
+		if token_payload["_id"] != account_id:
+			raise InvalidTokenException("The access token doesn't match the account ID.")
+
+	async def get_account_id(self):
+		"""Retrieve the account ID"""
+		res = await self.request('get', '/api/users/me')
+		acc = await res.json()
+		return acc["_id"]
 
 	async def get_machines(self):
 		"""Read all Machines from backend"""

@@ -18,7 +18,7 @@ setup(
 		long_description=long_description,
 		long_description_content_type="text/markdown",
 		packages=find_packages(),
-		install_requires=["aiohttp"],        
+		install_requires=["aiohttp", "pyjwt"],        
 		keywords=["home-assistant", "laundrify"],
 		classifiers=[
         "License :: OSI Approved :: MIT License",
