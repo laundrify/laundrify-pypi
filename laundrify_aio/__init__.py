@@ -39,6 +39,7 @@ class LaundrifyAPI:
 	async def request(self, method: str, path: str, **kwargs) -> ClientResponse:
 		"""Make a request."""
 		headers = kwargs.get("headers")
+		res = None
 
 		if headers is None:
 				headers = {}
@@ -51,6 +52,8 @@ class LaundrifyAPI:
 			res = await self.client_session.request(method, f"{path}", **kwargs, headers=headers)
 			res.raise_for_status()
 		except ClientError as err:
+			if (res and res.status == 401):
+				raise UnauthorizedException()
 			raise ApiConnectionException(err)
 
 		return res
@@ -58,7 +61,5 @@ class LaundrifyAPI:
 	async def get_machines(self):
 		"""Read all Machines from backend"""
 		res = await self.request('get', '/api/machines')
-		if (res.status == 401):
-			raise ApiUnauthorized()
 		machines = await res.json()
 		return machines
