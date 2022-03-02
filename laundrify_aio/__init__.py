@@ -15,10 +15,10 @@ class LaundrifyAPI:
 
 	host = "https://api.laundrify.de"
 
-	def __init__(self, access_token: str):
+	def __init__(self, access_token: str, session = None):
 		"""Initialize the API and store the auth so we can make requests."""
 		# raise_for_status: Raise an aiohttp.ClientResponseError if the response status is 400 or higher.
-		self.client_session = ClientSession(self.host)
+		self.client_session = session if session else ClientSession()
 		self.access_token = access_token
 
 	@classmethod
@@ -50,7 +50,7 @@ class LaundrifyAPI:
 		headers["authorization"] = f"Bearer ha|{self.access_token}"
 
 		try:
-			res = await self.client_session.request(method, f"{path}", **kwargs, headers=headers)
+			res = await self.client_session.request(method, f"{self.host}{path}", **kwargs, headers=headers)
 			res.raise_for_status()
 		except ClientError as err:
 			if (res and res.status == 401):
