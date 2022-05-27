@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.2 (2022-05-27)
+
+ - fix: use correct API endpoint
+
 ## v1.1.1 (2022-03-02)
 
  - feat: pass external ClientSession
