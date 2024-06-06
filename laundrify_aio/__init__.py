@@ -9,6 +9,8 @@ from .exceptions import (
 	UnauthorizedException
 )
 
+from .laundrify_device import LaundrifyDevice
+
 class LaundrifyAPI:
 	"""Class to communicate with the laundrify API."""
 
@@ -75,4 +77,5 @@ class LaundrifyAPI:
 		"""Read all Machines from backend"""
 		res = await self.request('get', '/api/machines')
 		machines = await res.json()
-		return machines
+		# return a dict of LaundrifyDevice objects indexed by their ID
+		return {machine["_id"]: LaundrifyDevice(machine, laundrify_api=self) for machine in machines}
