@@ -5,7 +5,6 @@ from .utils import validate_auth_code
 from .exceptions import (
 	ApiConnectionException,
 	InvalidFormat,
-	InvalidTokenException,
 	UnknownAuthCode,
 	UnauthorizedException
 )
@@ -62,7 +61,7 @@ class LaundrifyAPI:
 		token_payload = jwt.decode(self.access_token, options={"verify_signature": False})
 		account_id = await self.get_account_id()
 		if token_payload["_id"] != account_id:
-			raise InvalidTokenException("The access token doesn't match the account ID.")
+			raise UnauthorizedException("The access token doesn't match the account ID.")
 
 	async def get_account_id(self):
 		"""Retrieve the account ID"""

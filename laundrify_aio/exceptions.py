@@ -14,6 +14,3 @@ class ApiConnectionException(LaundrifyApiException):
 
 class UnauthorizedException(LaundrifyApiException):
 	"""Request is not authorized."""
-
-class InvalidTokenException(LaundrifyApiException):
-	"""Access Token is invalid."""
