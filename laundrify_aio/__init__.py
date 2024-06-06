@@ -18,7 +18,7 @@ class LaundrifyAPI:
 	def __init__(self, access_token: str, session = None):
 		"""Initialize the API and store the auth so we can make requests."""
 		# raise_for_status: Raise an aiohttp.ClientResponseError if the response status is 400 or higher.
-		self.client_session = session if session else ClientSession()
+		self.client_session = session if session else ClientSession(raise_for_status=True)
 		self.access_token = access_token
 
 	@classmethod
@@ -31,7 +31,6 @@ class LaundrifyAPI:
 				async with session.post('/auth/home-assistant/token', json={'authCode': auth_code}) as res:
 					if (res.status == 404):
 						raise UnknownAuthCode(f"The given AuthCode ({auth_code}) could not be found.")
-					res.raise_for_status()
 					data = await res.json()
 					return data["token"]
 			except ClientError as err:
@@ -51,7 +50,6 @@ class LaundrifyAPI:
 
 		try:
 			res = await self.client_session.request(method, f"{self.host}{path}", **kwargs, headers=headers)
-			res.raise_for_status()
 		except ClientError as err:
 			if (res and res.status == 401):
 				raise UnauthorizedException()
@@ -69,6 +67,8 @@ class LaundrifyAPI:
 	async def get_account_id(self):
 		"""Retrieve the account ID"""
 		res = await self.request('get', '/api/users/me')
+		if res.status == 401:
+			raise UnauthorizedException("The access token is invalid.")
 		acc = await res.json()
 		return acc["_id"]
 
