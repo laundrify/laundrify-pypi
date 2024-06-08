@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.0 (2024-06-08)
+ - **(!) BREAKING CHANGE:** `get_machines()` now returns a dict of `LaundrifyDevice` objects indexed by their ID
+ - feat: query devices locally for latest power measurements
+ - refactor: raise an error by default if response code is 400 or higher
+ - refactor: replace InvalidTokenException by a general UnauthorizedException
+
 ## v1.1.2 (2022-05-27)
 
  - fix: use correct API endpoint
