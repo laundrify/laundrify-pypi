@@ -1,7 +1,9 @@
 # Changelog
 
-## v1.2.0 (2024-06-08)
- - **(!) BREAKING CHANGE:** `get_machines()` now returns a dict of `LaundrifyDevice` objects indexed by their ID
+## v1.2.1 (2024-07-02)
+ - **⚠️ BREAKING CHANGES:** 
+   - `get_machines()` now returns a list of `LaundrifyDevice` objects
+   - leading underscores are removed in property names (i.e. `_id` becomes `id`)
  - feat: query devices locally for latest power measurements
  - refactor: raise an error by default if response code is 400 or higher
  - refactor: replace InvalidTokenException by a general UnauthorizedException
