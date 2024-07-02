@@ -7,9 +7,11 @@ from .exceptions import DeviceConnectionException, UnsupportedFunctionException
 class LaundrifyDevice:
     def __init__(self, machine_data: dict, laundrify_api):
         self.laundrify_api = laundrify_api
-        # assign all properties to the object
+
+        # assign all machine_data properties to the object
+        # and remove leading underscores to avoid linting errors with semi-private properties
         for key, value in machine_data.items():
-            setattr(self, key, value)
+            setattr(self, key.lstrip('_'), value)
     
     async def is_pingable(self):
         return False
