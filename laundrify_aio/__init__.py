@@ -77,5 +77,5 @@ class LaundrifyAPI:
 		"""Read all Machines from backend"""
 		res = await self.request('get', '/api/machines')
 		machines = await res.json()
-		# return a dict of LaundrifyDevice objects indexed by their ID
-		return {machine["_id"]: LaundrifyDevice(machine, laundrify_api=self) for machine in machines}
+		# return a list of LaundrifyDevice objects
+		return [LaundrifyDevice(machine, self) for machine in machines]
