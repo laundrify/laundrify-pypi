@@ -33,8 +33,8 @@ if __name__ == "__main__":
 To build and publish the package, run the following:
 
 ```bash
-# Make a source distribution and a wheel
-python3 setup.py sdist bdist_wheel
+# Use the custom `dist_wheel` command that stashes uncommitted changes and runs `sdist` and `bdist_wheel`
+python3 setup.py dist_wheel
 
 # Make sure the long description will render correctly
 twine check dist/*
