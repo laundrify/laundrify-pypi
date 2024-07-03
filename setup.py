@@ -3,7 +3,7 @@ import subprocess
 from setuptools import setup, find_packages
 from distutils.core import Command
 
-VERSION = "1.2.1"
+VERSION = "1.2.2"
 
 # read the contents of your README file
 from pathlib import Path

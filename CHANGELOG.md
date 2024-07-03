@@ -1,10 +1,11 @@
 # Changelog
 
-## v1.2.1 (2024-07-02)
+## v1.2.2 (2024-07-03)
  - **⚠️ BREAKING CHANGES:** 
    - `get_machines()` now returns a list of `LaundrifyDevice` objects
    - leading underscores are removed in property names (i.e. `_id` becomes `id`)
  - feat: query devices locally for latest power measurements
+ - feat: add `dist_wheel` command to build the package
  - refactor: raise an error by default if response code is 400 or higher
  - refactor: replace InvalidTokenException by a general UnauthorizedException
 
